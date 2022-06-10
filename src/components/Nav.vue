@@ -1,19 +1,21 @@
 <template>
     <div class="nav">
-        <router-link to="/money">
-            <svg>
-                <use xlink:href="#label" />
-            </svg>
+        <router-link to="/money" class="icon">
+            <Icons name="money" />
             记账
         </router-link>
-        <router-link to="/labels">标签</router-link>
-        <router-link to="/statistics">统计</router-link>
+        <router-link to="/labels" class="icon">
+            <Icons name='label' />
+            标签
+        </router-link>
+        <router-link to="/statistics" class="icon">
+            <Icons name="statistics" />
+            统计
+        </router-link>
     </div>
 </template>
 
-<script>
-import labels from '@/assets/icons/label.svg'
-console.log(labels);
+<script lang="ts">
 export default {
     name: "Nav"
 }
@@ -22,5 +24,11 @@ export default {
 <style scoped lang="scss">
 .nav {
     border: 1px solid green;
+
+}
+
+.icon {
+    display: flex;
+    flex-direction: row;
 }
 </style>

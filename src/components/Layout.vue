@@ -20,10 +20,12 @@ export default {
   flex-direction: column;
   height: 100vh;
 }
-.Nav{
+
+.Nav {
   display: flex;
   justify-content: space-around;
 }
+
 .content {
   flex-grow: 1;
   overflow: auto;
