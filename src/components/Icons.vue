@@ -17,8 +17,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .icon {
-    width: 1em;
-    height: 1em;
+    width: 32px;
+    height: 32px;
     vertical-align: -0.15em;
     fill: currentColor;
     overflow: hidden;
