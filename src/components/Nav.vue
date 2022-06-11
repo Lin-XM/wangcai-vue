@@ -35,7 +35,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            color: rgb(57,37,157);
+            color: rgb(157, 131, 37);
             font-size: 12px;
             .icon {
                 width: 32px;
@@ -43,7 +43,7 @@
             }
         }
         > .item.selected{
-            background: #2fd6ff;
+            color: #0887e8;
         }
     }
 </style>
