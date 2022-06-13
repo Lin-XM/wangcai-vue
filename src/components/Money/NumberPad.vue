@@ -1,30 +1,82 @@
 <template>
     <div class="numberPad">
-        <div class="output">100</div>
+        <div class="output">{{output ||'0'}}</div>
         <div class="buttons">
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
+            <button @click="inputContent">1</button>
+            <button @click="inputContent">2</button>
+            <button @click="inputContent">3</button>
+            <button @click="remove">C</button>
+
+            <button @click="inputContent">4</button>
+            <button @click="inputContent">5</button>
+            <button @click="inputContent">6</button>
             <button>+</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
+
+            <button @click="inputContent">7</button>
+            <button @click="inputContent">8</button>
+            <button @click="inputContent">9</button>
             <button>-</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button class="ok">OK</button>
-            <button>.</button>
-            <button class="zero">0</button>
-            <button>CE</button>
+
+
+            <button @click="inputContent">.</button>
+            <button @click="inputContent" class="zero">0</button>
+            <button @click="clear">CE</button>
+            <button @click="ok" class="ok">OK</button>
         </div>
     </div>
 </template>
 
-<script>
-    export default {
-        name: "NumberPad"
+<script lang="ts">
+  import Vue from 'vue';
+  import {Component} from 'vue-property-decorator';
+
+  @Component
+  export default class NumberPad extends Vue {
+    output = '0';
+
+    inputContent(event: MouseEvent) {     // 事件分为，鼠标事件，键盘事件，用户事件，UI事件
+      const button = (event.target as HTMLButtonElement);
+      const input = button.textContent as string;
+      if (this.output.length === 16) return;
+      if (this.output === '0') {                // 当输入框 为 0
+        if ('0123456789'.indexOf(input) >= 0) { // 用户输入的 不为0
+          this.output = input;
+          return;
+        } else {                                  // 输入的为 。
+          this.output += input;
+          return;
+        }
+      }
+      if (this.output.indexOf('.') >= 0) {              // 判断是否 有 。
+        if (input === '.') return;                      // 判断是否 又输入一个 。
+      }
+
+      this.output += input;
     }
+
+    remove() {
+      this.output = this.output.slice(0, -1);
+      if(this.output.length === 0 ){
+        this.output = '0'
+      }
+      /*
+        if(this.output.length === 1){
+             this.output = '0"
+        }else{
+            this.output = this.output.slice(0,-1)
+        }
+
+      *  */
+    }
+
+    clear() {
+      this.output = '0';
+    }
+
+    ok() {
+      console.log(this.output);
+    }
+  }
 </script>
 
 <style scoped lang="scss">
@@ -38,6 +90,7 @@
             text-align: right;
             background: #59e5cf;
             box-shadow: inset 0 -3px 3px -3px rgba(0, 0, 0, 0.3);
+            min-height: 72px;
         }
 
         .buttons {
@@ -51,7 +104,7 @@
                 border: none;
 
                 &.ok {
-                    height: 64px*2;
+                    height: 64px;
                     float: right;
                 }
 
@@ -80,12 +133,12 @@
                     background-color: darken($bg, 16%);
                 }
 
-                &:nth-child(15) {
+                &:nth-child(12), &:nth-child(15) {
                     background-color: darken($bg, 20%);
                 }
 
-                &:nth-child(12) {
-                    background-color: darken($bg, 24%);
+                &:nth-child(16) {
+                    background-color: #59e5cf;
 
                 }
             }
