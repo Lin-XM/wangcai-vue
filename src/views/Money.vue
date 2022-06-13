@@ -1,22 +1,32 @@
 <template>
     <Layout class-prefix="layout">
         <NumberPad/>
-        <Types />
+        <Types/>
         <Notes/>
-        <Tags/>
+        <Tags :data-source="tags" v-on:getTags="tagsInfo"/>
     </Layout>
 </template>
 
-<script lang="ts">
-  import NumberPad from '@/components/Money/NumberPad.vue';
-  import Types from '@/components/Money/Types.vue';
-  import Notes from '@/components/Money/Notes.vue';
-  import Tags from '@/components/Money/Tags.vue';
+<script lang="js">
+    import NumberPad from '@/components/Money/NumberPad.vue';
+    import Types from '@/components/Money/Types.vue';
+    import Notes from '@/components/Money/Notes.vue';
+    import Tags from '@/components/Money/Tags.vue';
 
-  export default {
-    name: 'Money',
-    components: {Tags, Notes, Types, NumberPad},
-  };
+    export default {
+        name: 'Money',
+        components: {Tags, Notes, Types, NumberPad},
+        data() {
+            return {
+                tags: ['衣', '食', '住', '行','娱乐']
+            }
+        },
+        methods:{
+            tagsInfo(name){
+                this.tags.push(name)
+            }
+        }
+    };
 </script>
 <style lang="scss">
     .layout-body-content {
