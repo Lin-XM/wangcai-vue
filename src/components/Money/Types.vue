@@ -10,18 +10,25 @@
 <script lang="ts">
   import Vue from 'vue';
   // vue-property-decorator 是一个比官方好一些的第三方库
-  import {Component} from 'vue-property-decorator';
+  import {Component, Watch,Prop} from 'vue-property-decorator';
 
   @Component
   export default class Types extends Vue {
     // initial data
-    type = '-';        // '-' 表示支出， ‘+’ 表示收入
+    // type = '-';        // '-' 表示支出， ‘+’ 表示收入
+    @Prop({default:"-"}) readonly type!:string
     selectedType(type: string) {
       if (type !== '-' && type !== '+') {
         throw new Error('type is unknown!!');
       }
-      this.type = type;
+      // this.type = type;
+      this.$emit('updateTypes',type)
     }
+
+    // @Watch('type')
+    // onTypesChanged(value:string){
+    //   this.$emit('updateTypes',value)
+    // }
   }
 </script>
 

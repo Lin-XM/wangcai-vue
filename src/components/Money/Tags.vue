@@ -31,6 +31,7 @@
       } else {
         this.selectedTags.push(tag);
       }
+      this.$emit('updateSelected',this.selectedTags)
     }
 
     // 创建标签

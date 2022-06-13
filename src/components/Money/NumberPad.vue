@@ -28,21 +28,22 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Prop} from 'vue-property-decorator';
 
   @Component
   export default class NumberPad extends Vue {
     output = '0';
 
-    inputContent(event: MouseEvent) {     // 事件分为，鼠标事件，键盘事件，用户事件，UI事件
+
+    inputContent(event: MouseEvent) {               // 事件分为，鼠标事件，键盘事件，用户事件，UI事件
       const button = (event.target as HTMLButtonElement);
       const input = button.textContent as string;
       if (this.output.length === 16) return;
-      if (this.output === '0') {                // 当输入框 为 0
-        if ('0123456789'.indexOf(input) >= 0) { // 用户输入的 不为0
+      if (this.output === '0') {                    // 当输入框 为 0
+        if ('0123456789'.indexOf(input) >= 0) {     // 用户输入的 不为0
           this.output = input;
           return;
-        } else {                                  // 输入的为 。
+        } else {                                    // 输入的为 。
           this.output += input;
           return;
         }
@@ -56,8 +57,8 @@
 
     remove() {
       this.output = this.output.slice(0, -1);
-      if(this.output.length === 0 ){
-        this.output = '0'
+      if (this.output.length === 0) {
+        this.output = '0';
       }
       /*
         if(this.output.length === 1){
@@ -74,7 +75,9 @@
     }
 
     ok() {
-      console.log(this.output);
+      this.$emit('updateAmount',this.output)
+      this.$emit('submit',this.output)
+      this.output =  '0'
     }
   }
 </script>
