@@ -1,9 +1,7 @@
 <template >
-    <div>
-        <svg class="icons">
-            <use :xlink:href="'#' + name" />
-        </svg>
-    </div>
+    <svg class="icons">
+        <use :xlink:href="'#' + name" />
+    </svg>
 </template>
 <script lang="ts">
 let importAll = (requireContext: __WebpackModuleApi.RequireContext) => requireContext.keys().forEach(requireContext)
