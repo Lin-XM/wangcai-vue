@@ -28,6 +28,7 @@ module.exports = {
     }
   ],
   "globals":{
-    "__WebpackModuleApi":true
+    "__WebpackModuleApi":true,
+    "RecordItem":true,
   }
 }
