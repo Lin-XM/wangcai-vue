@@ -1,6 +1,6 @@
 <template>
     <div>
-        <label class="notes">
+        <label class="formItem">
             <span class="name">{{this.fieldName}}</span>
             <input type="text" :placeholder="this.placeholder" :value="value" @input="onInput">
         </label>
@@ -14,7 +14,7 @@
 
 
   @Component
-  export default class Notes extends Vue {
+  export default class FormItem extends Vue {
     value = '';
 
     // 接收外面传递的数据
@@ -36,8 +36,7 @@
 <style scoped lang="scss">
     @import "~@/assets/styles/helper.scss";
 
-    .notes {
-        background-color: #cee7e7;
+    .formItem {
         font-size: 14px;
         padding-left: 16px;
         display: flex;
@@ -48,7 +47,7 @@
         }
 
         input {
-            height: 64px;
+            height: 40px;
             flex-grow: 1;
             background-color: transparent;
             border: none;
