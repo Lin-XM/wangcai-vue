@@ -2,7 +2,7 @@
     <Layout class-prefix="layout">
         <NumberPad @updateAmount="onUpdateAmount" @submit="saveRecord"/>
         <Types :type="record.type" @updateTypes="onUpdateType"/>
-        <Notes @updateNotes="onUpdateNotes"/>
+        <Notes field-name="备注" placeholder="你还没有输入备注呢~" @updateNotes="onUpdateNotes"/>
         <Tags :data-source="tags" v-on:getTags="tagsInfo" @updateSelected="onSelect"/>
     </Layout>
 </template>

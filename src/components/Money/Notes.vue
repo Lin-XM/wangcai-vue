@@ -1,15 +1,15 @@
 <template>
     <div>
         <label class="notes">
-            <span class="name">备注:</span>
-            <input type="text" placeholder="请输入您的备注" :value="value" @input="onInput">
+            <span class="name">{{this.fieldName}}</span>
+            <input type="text" :placeholder="this.placeholder" :value="value" @input="onInput">
         </label>
     </div>
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Watch} from 'vue-property-decorator';
+  import {Component, Prop, Watch} from 'vue-property-decorator';
 
 
 
@@ -17,6 +17,9 @@
   export default class Notes extends Vue {
     value = '';
 
+    // 接收外面传递的数据
+    @Prop({required:true}) fieldName!:string
+    @Prop() placeholder?:string
 
     @Watch('value')
     onValueChanged(value: string) {
