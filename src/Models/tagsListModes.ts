@@ -1,14 +1,16 @@
 const localStorageKeyName = 'tagsList';
 type Tag = {
   id: string
-  name:string
+  name: string
 }
 
 type TagListModel = {
   data: Tag[]
   fetch: () => Tag[]
-  create: (name: string) => 'success' | "duplicated"   // success:表示成功， duplicated：表示标签名称重复
+  create: (name: string) => 'success' | 'duplicated'   // success:表示成功， duplicated：表示标签名称重复
   save: () => void
+  update: (id: string, name: string) => 'success' | 'not found' | 'duplicated'
+  remove: (id: string) => boolean
 }
 
 
@@ -22,14 +24,48 @@ const tagListModel: TagListModel = {
   save() {         // 保存数据
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
   },
-  create(name: string) {
-    const names = this.data.map(item=> item.name)
-    if (names.indexOf(name) >= 0) {
-      return "duplicated"
+
+  update(id, name) {
+    const idList = this.data.map(item => item.id);
+    if (idList.indexOf(id) >= 0) {
+      const names = this.data.map(item => item.name);
+      if (names.indexOf(name) >= 0) {
+        return 'duplicated';
+      } else {
+        const tag = this.data.filter(item => item.id = id)[0];
+        tag.name = name;
+        tag.id = name;
+        this.save();
+        return 'success';
+      }
+
+    } else {
+      return 'not found';
     }
-    this.data.push({id:name,name:name});
+  },
+
+  remove(id: string) {
+    let index = -1;
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    this.data.splice(index, 1);
     this.save();
-    return "success";
+    return true;
+  },
+
+
+  create(name: string) {
+    const names = this.data.map(item => item.name);
+    if (names.indexOf(name) >= 0) {
+      return 'duplicated';
+    }
+    this.data.push({id: name, name: name});
+    this.save();
+    return 'success';
   }
 };
 

@@ -2,7 +2,10 @@
     <div>
         <label class="formItem">
             <span class="name">{{this.fieldName}}</span>
-            <input type="text" :placeholder="this.placeholder" :value="value" @input="onInput">
+            <input type="text"
+                   :placeholder="this.placeholder"
+                   :value="value"
+                   @input="onValueChanged($event.target.value)">
         </label>
     </div>
 </template>
@@ -12,24 +15,23 @@
   import {Component, Prop, Watch} from 'vue-property-decorator';
 
 
-
   @Component
   export default class FormItem extends Vue {
-    value = '';
+    @Prop({default: ''}) readonly   value!: string;
 
     // 接收外面传递的数据
-    @Prop({required:true}) fieldName!:string
-    @Prop() placeholder?:string
+    @Prop({required: true}) fieldName!: string;
+    @Prop() placeholder?: string;
 
     @Watch('value')
     onValueChanged(value: string) {
       this.$emit('updateNotes', value);
     }
 
-    onInput(event: KeyboardEvent) {
-      const input = (event.target as HTMLInputElement);
-      this.value = input.value;
-    }
+    // onInput(event: KeyboardEvent) {
+    //   const input = (event.target as HTMLInputElement);
+    //   this.value = input.value;
+    // }
   }
 </script>
 
