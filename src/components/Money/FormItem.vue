@@ -3,7 +3,7 @@
         <label class="formItem">
             <span class="name">{{this.fieldName}}</span>
             <input type="text"
-                   :placeholder="this.placeholder"
+                   :placeholder="placeholder"
                    :value="value"
                    @input="onValueChanged($event.target.value)">
         </label>
@@ -17,13 +17,12 @@
 
   @Component
   export default class FormItem extends Vue {
-    @Prop({default: ''}) readonly   value!: string;
+    @Prop({default: ''}) readonly value!: string;
 
     // 接收外面传递的数据
     @Prop({required: true}) fieldName!: string;
     @Prop() placeholder?: string;
 
-    @Watch('value')
     onValueChanged(value: string) {
       this.$emit('updateNotes', value);
     }

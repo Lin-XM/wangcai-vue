@@ -2,8 +2,8 @@
     <Layout class-prefix="layout">
         <NumberPad @updateAmount="onUpdateAmount" @submit="saveRecord"/>
         <Types :type="record.type" @updateTypes="onUpdateType"/>
-        <div class="notes" >
-            <FormItem field-name="备注：" placeholder="你还没有输入备注呢~" @updateNotes="onUpdateNotes"  />
+        <div class="notes">
+            <FormItem field-name="备注：" placeholder="你还没有输入备注呢~" @updateNotes="onUpdateNotes"/>
 
         </div>
         <Tags :data-source="tags" v-on:getTags="tagsInfo" @updateSelected="onSelect"/>
@@ -18,11 +18,11 @@
   import Tags from '@/components/Money/Tags.vue';
   import {Component, Watch} from 'vue-property-decorator';
   import recordListModel from '@/Models/RecordListModel.ts';
- import tagListModel  from '@/Models/tagsListModes';
+  import tagListModel from '@/Models/tagsListModes';
 
 
   const recordList = recordListModel.fetch();
-  const tagsList = tagListModel.fetch()
+  const tagsList = tagListModel.fetch();
 
 
   @Component({
@@ -61,15 +61,13 @@
     }
 
     saveRecord() {
-      const recordClone: RecordItem = recordListModel.clone(this.record);
-      recordClone.createAt = new Date();
-      this.recordList.push(recordClone);
+      recordListModel.create(this.record);
     }
 
     @Watch('recordList')
     onRecordListChange() {
 
-      recordListModel.save(this.recordList);
+      recordListModel.save();
     }
 
   }
@@ -79,9 +77,10 @@
         display: flex;
         flex-direction: column-reverse;
     }
-    .notes{
+
+    .notes {
         background-color: #cee7e7;
-        padding:12px 0 ;
+        padding: 12px 0;
     }
 
 </style>
