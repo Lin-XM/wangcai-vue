@@ -6,7 +6,7 @@
             <FormItem field-name="备注：" placeholder="你还没有输入备注呢~" @updateNotes="onUpdateNotes"/>
 
         </div>
-        <Tags :data-source="tags" v-on:getTags="tagsInfo" @updateSelected="onSelect"/>
+        <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
     </Layout>
 </template>
 
@@ -22,27 +22,25 @@
 
 
   const recordList = recordListModel.fetch();
-  const tagsList = tagListModel.fetch();
 
 
   @Component({
     components: {Tags, FormItem, Types, NumberPad},
   })
   export default class Money extends Vue {
-    tags = tagsList;
+    tags = window.tagList;
 
 
     recordList: RecordItem[] = recordList;
     record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
 
-    tagsInfo(name: string) {
-      this.tags.push(name);
-    }
+    // tagsInfo(name: string) {
+    //   this.tags.push(name);
+    // }
 
-    onSelect(selectTags: string[]) {
-      console.log(selectTags);
-      this.record.tags = selectTags;
+    onUpdateTags(value: string[]) {
+      this.record.tags = value;
     }
 
     onUpdateNotes(notes: string) {

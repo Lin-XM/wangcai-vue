@@ -41,7 +41,7 @@
         window.alert('标签名称不能为空值！！');
       } else {
         if (this.dataSource) {
-          this.$emit('getTags', name);
+          this.$emit('getTags', [...this.dataSource,name]);
         }
       }
       console.log(name);
@@ -60,11 +60,10 @@
         flex-grow: 1;
         display: flex;
         flex-direction: column-reverse;
-
+        flex-wrap: wrap;
         > .current {
             display: flex;
-            float-wrap: wrap;
-
+            flex-wrap: wrap;
             > li {
                 $bg: rgb(192, 217, 255);
                 background-color: $bg;

@@ -7,3 +7,23 @@ type RecordItem = {
   amount: number
   createAt?:Date
 }
+
+type Tag = {
+  id: string
+  name: string
+}
+
+type TagListModel = {
+  data: Tag[]
+  fetch: () => Tag[]
+  create: (name: string) => 'success' | 'duplicated'   // success:表示成功， duplicated：表示标签名称重复
+  save: () => void
+  update: (id: string, name: string) => 'success' | 'not found' | 'duplicated'
+  remove: (id: string) => boolean
+}
+
+// 声明全局变量类型
+interface Window{
+  tagList: Tag[];
+  createTag:(name:string)=>void
+}

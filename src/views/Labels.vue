@@ -21,23 +21,20 @@
   import tagListModel from '@/Models/tagsListModes';
   import Button from '@/components/Button.vue';
 
-  tagListModel.fetch();
   @Component({
     components: {Button}
   })
   export default class Labels extends Vue {
 
-    tags = tagListModel.data;
+    tags = window.tagList;
+    // 此时读取在 window 上
+    // 写入却在 tagListRecord.create 上
 
     createTag() {
       const name = window.prompt('请输入你的标签名：');
       if (name) {
-        const message = tagListModel.create(name);
-        if (message === 'duplicated') {
-          window.alert('输入的标签名称重复！');
-        } else if (message === 'success') {
-          window.alert('标签添加成功！');
-        }
+        // 创建 tag
+        window.createTag(name);
 
       }
     }
