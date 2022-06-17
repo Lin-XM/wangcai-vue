@@ -21,6 +21,7 @@ const recordListModel = {
     recordClone.createAt = new Date();
 
     this.data.push(recordClone);
+    this.save()
   }
 
 };
