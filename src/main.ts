@@ -13,6 +13,11 @@ Vue.component("Layout", Layout);
 Vue.component("Icons",Icons)
 
 window.tagList = tagListModel.fetch()
+window.findTag =(id:string) =>{
+  const tag = window.tagList.filter(t => t.id === id)[0];
+  return tag
+}
+
 window.createTag = (name:string)=>{
   const message = tagListModel.create(name);
   if (message === 'duplicated') {
@@ -20,6 +25,12 @@ window.createTag = (name:string)=>{
   } else if (message === 'success') {
     window.alert('标签添加成功！');
   }
+}
+window.removeTag = (id:string)=>{
+  return tagListModel.remove(id);
+}
+window.updateTag = (id:string,name:string)=>{
+  return tagListModel.update(id, name)
 }
 
 

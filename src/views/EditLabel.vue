@@ -20,7 +20,6 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
-  import tagListModel from '@/Models/tagsListModes';
   import FormItem from '@/components/Money/FormItem.vue';
   import Button from '@/components/Button.vue';
 
@@ -28,39 +27,39 @@
     components: {Button, FormItem}
   })
   export default class EditLabel extends Vue {
-    tag?:{id:string,name:string} = undefined
+    // eslint-disable-next-line no-undef
+    tag?: Tag =undefined;
 
     created() {
-      const id = this.$route.params.id;
-      tagListModel.fetch();
-      const tags = tagListModel.data;
-      const tag = tags.filter(t => t.id === id)[0];
-      if (tag) {
-        console.log(tag);
-        this.tag = tag
-      } else {
+      this.tag = window.findTag(this.$route.params.id);
+
+      if (!this.tag) {
         this.$router.replace('/404');
       }
     }
-    // 修改标签
-    updateTag(name:string){
-      console.log("111111")
-      if(this.tag){
-        tagListModel.update(this.tag.id, name)
+
+    // 修改标签，还有bug
+    updateTag(name: string) {
+      console.log('111111');
+      if (this.tag) {
+        window.updateTag(this.tag.id, name);
       }
     }
 
-    remove(){
-        if(this.tag){
-          if(tagListModel.remove(this.tag.id)){
-            this.$router.back()
-          }else{
-            window.alert("删除失败！")
-          }
+
+    // 删除标签
+    remove() {
+      if (this.tag) {
+        if (window.removeTag(this.tag.id)) {
+          this.$router.back();
+        } else {
+          window.alert('删除失败！');
         }
+      }
     }
-    goBack(){
-      this.$router.back()
+
+    goBack() {
+      this.$router.back();
     }
 
   }
@@ -92,14 +91,16 @@
         }
 
     }
+
     .form-wrapper {
         /* money.vue 配置了颜色*/
         background-color: #cee7e7;
         margin-top: 8px;
     }
-    .button-wrapper{
+
+    .button-wrapper {
         text-align: center;
-        padding:16px;
+        padding: 16px;
         margin-top: 28px;
     }
 </style>

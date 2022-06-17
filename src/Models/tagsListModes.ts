@@ -34,9 +34,10 @@ const tagListModel: TagListModel = {
       if (names.indexOf(name) >= 0) {
         return 'duplicated';
       } else {
-        const tag = this.data.filter(item => item.id = id)[0];
+        // 导致修改 标签 出现错误的产生bug的地方
+        const tag = this.data.filter(item => item.id === id)[0];
         tag.name = name;
-        tag.id = name;
+
         this.save();
         return 'success';
       }

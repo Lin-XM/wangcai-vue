@@ -12,7 +12,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component, Prop, Watch} from 'vue-property-decorator';
+  import {Component, Prop} from 'vue-property-decorator';
 
 
   @Component
@@ -24,7 +24,7 @@
     @Prop() placeholder?: string;
 
     onValueChanged(value: string) {
-      this.$emit('updateNotes', value);
+      this.$emit('update:value', value);
     }
 
     // onInput(event: KeyboardEvent) {

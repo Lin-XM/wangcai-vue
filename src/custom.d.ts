@@ -5,7 +5,7 @@ type RecordItem = {
   notes: string
   type: string
   amount: number
-  createAt?:Date
+  createAt?: Date
 }
 
 type Tag = {
@@ -23,7 +23,10 @@ type TagListModel = {
 }
 
 // 声明全局变量类型
-interface Window{
+interface Window {
   tagList: Tag[];
-  createTag:(name:string)=>void
+  createTag: (name: string) => void
+  removeTag: (id: string) => boolean
+  updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated'
+  findTag: (id: string) => Tag | undefined
 }
