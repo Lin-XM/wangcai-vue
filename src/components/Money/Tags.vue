@@ -17,12 +17,22 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
-  import store from '@/store/index2';
+  import store from '@/store/index.ts';
 
-  @Component
+  @Component({
+    computed: {
+      tagList() {
+        return this.$store.state.tagList;
+
+      }
+    }
+  })
   export default class Tags extends Vue {
-    tagList = store.fetchTags();
     selectedTags: string[] = [];
+
+    created() {
+      this.$store.commit('fetchTags');
+    }
 
     // 是否选中标签
     toggle(tag: string) {
@@ -33,7 +43,7 @@
         this.selectedTags.push(tag);
       }
       // 导致不能传递标签
-      this.$emit('update:value',this.selectedTags)
+      this.$emit('update:value', this.selectedTags);
 
     }
 
@@ -43,7 +53,7 @@
       if (!name) {
         return window.alert('标签名称不能为空值！！');
       }
-        store.createTag(name)
+      store.commit('createTags', name);
     }
   }
 
@@ -60,9 +70,11 @@
         display: flex;
         flex-direction: column-reverse;
         flex-wrap: wrap;
+
         > .current {
             display: flex;
             flex-wrap: wrap;
+
             > li {
                 $bg: rgb(192, 217, 255);
                 background-color: $bg;
