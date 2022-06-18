@@ -14,7 +14,6 @@
 
   @Component
   export default class Types extends Vue {
-    // initial data
     // type = '-';        // '-' 表示支出， ‘+’ 表示收入
     @Prop({default:"-"}) readonly type!:string
     selectedType(type: string) {
@@ -25,10 +24,6 @@
       this.$emit('updateTypes',type)
     }
 
-    // @Watch('type')
-    // onTypesChanged(value:string){
-    //   this.$emit('updateTypes',value)
-    // }
   }
 </script>
 

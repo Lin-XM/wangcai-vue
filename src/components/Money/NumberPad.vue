@@ -33,7 +33,7 @@
   @Component
   export default class NumberPad extends Vue {
     output = '0';
-
+    @Prop() readonly value!: number;
 
     inputContent(event: MouseEvent) {               // 事件分为，鼠标事件，键盘事件，用户事件，UI事件
       const button = (event.target as HTMLButtonElement);
@@ -45,14 +45,15 @@
           return;
         } else {                                    // 输入的为 。
           this.output += input;
-          return;
-        }
-      }
-      if (this.output.indexOf('.') >= 0) {              // 判断是否 有 。
-        if (input === '.') return;                      // 判断是否 又输入一个 。
-      }
 
+        }
+        return;
+      }
+      if (this.output.indexOf('.') >= 0 && input === '.') {              // 判断是否 有 。
+        return;                                                   // 判断是否 又输入一个 。
+      }
       this.output += input;
+      return;
     }
 
     remove() {
@@ -75,9 +76,9 @@
     }
 
     ok() {
-      this.$emit('updateAmount',this.output)
-      this.$emit('submit',this.output)
-      this.output =  '0'
+      this.$emit('update:value', this.output);
+      this.$emit('submit', this.output);
+      this.output = '0';
     }
   }
 </script>
