@@ -23,11 +23,12 @@
 
   @Component({
     components: {Tags, FormItem, Types, NumberPad},
-    computed:{
-      recordList(){return this.$store.state.recordList}
-    }
   })
   export default class Money extends Vue {
+
+    get recordList(){
+      return this.$store.state.recordList
+    }
 
     // 当前点击标签，添加数值，不能一起存入 localStorage中
 

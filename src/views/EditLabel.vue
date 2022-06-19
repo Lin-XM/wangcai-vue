@@ -25,14 +25,24 @@
   import store from '@/store/index2';
 
   @Component({
-    components: {Button, FormItem}
+    components: {Button, FormItem},
+    computed: {
+      tag() {
+      }
+    }
   })
   export default class EditLabel extends Vue {
-    tag?: Tag =undefined;
+    // Vue Class Component 新语法
+    get tag() {
+      return this.$store.state.currentTag;
+    }
+    set(){
 
+    }
     created() {
-      this.tag = store.findTag(this.$route.params.id);
-
+      const id = this.$route.params.id;
+      this.$store.commit('setCurrentTag', id);
+      console.log(this.tag);
       if (!this.tag) {
         this.$router.replace('/404');
       }

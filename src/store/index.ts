@@ -4,6 +4,13 @@ import clone from '@/lib/clone';
 import createId from '@/lib/createId';
 // 下面的方法会将 store 绑定在 vue.prototype 上
 Vue.use(Vuex);
+type RootState = {
+  recordList: RecordItem[],
+
+  tagList: Tag[],
+
+  currentTag?: Tag,
+}
 
 const store = new Vuex.Store({
   // 数据
@@ -11,7 +18,9 @@ const store = new Vuex.Store({
     recordList: [] as RecordItem[],
 
     tagList: [] as Tag[],
-  },
+
+    currentTag: undefined,
+  } as RootState,
 
 
   // 同步方法
@@ -52,6 +61,14 @@ const store = new Vuex.Store({
     saveTags(state) {         // 保存数据
       window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
     },
+    findTag(state, id: string) {
+      let tag: Tag;
+      tag = state.tagList.filter(t => t.id === id)[0];
+      return tag;
+    },
+    setCurrentTag(state, id: string) {
+      state.currentTag = state.tagList.filter(t => t.id === id)[0];
+    }
   },
 
   // 异步、同步动作
