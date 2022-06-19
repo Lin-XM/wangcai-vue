@@ -27,7 +27,7 @@
         display: flex;
         box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
         flex-direction: row;
-        background-color: rgb(192, 217, 255);
+        background-color: #59e5cf;
 
         > .item {
             padding: 2px;
