@@ -19,7 +19,7 @@
   import {Component} from 'vue-property-decorator';
   import store from '@/store/index.ts';
 
-  @Component(
+  @Component
   export default class Tags extends Vue {
 
     get tagList() {
