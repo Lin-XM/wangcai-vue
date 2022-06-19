@@ -1,7 +1,7 @@
 <template>
     <div>
-        <ul class="tabs">
-            <li v-for="item in dataSource" :key="item.value"
+        <ul class="tabs" :class="{[classPrefix+'-tabs']:classPrefix }">
+            <li class="tabs-item" v-for="item in dataSource" :key="item.value"
                 :class="{[classPrefix+'-tabs-item']:classPrefix,selected:item.value === value}"
                 @click="select(item)">{{item.text}}
             </li>
@@ -25,10 +25,6 @@
     @Prop(String) readonly value!: string;      //选中哪行
     @Prop(String) classPrefix?: string;                      // 类型前缀
 
-    // liClass (item:DataSourceItem){
-    //     [this.classPrefix+'-tabs-item']:this.classPrefix,
-    //     selected:item.value === this.value
-    // }
 
     select(item: DataSourceItem) {
       this.$emit('update:value', item.value);
@@ -46,7 +42,7 @@
         text-align: center;
         font-size: 24px;
 
-        > li {
+        &-item {
             width: 50%;
             height: 64px;
             display: flex;
