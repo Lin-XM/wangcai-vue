@@ -25,10 +25,6 @@
 
   @Component({
     components: {Button, FormItem},
-    computed: {
-      tag() {
-      }
-    }
   })
   export default class EditLabel extends Vue {
     // Vue Class Component 新语法
@@ -45,7 +41,6 @@
 
       this.$store.commit('fetchTags');
       this.$store.commit('setCurrentTag', id);
-      console.log(this.tag);
       if (!this.tag) {
         this.$router.replace('/404');
       }
@@ -53,7 +48,6 @@
 
     // 修改标签，还有bug
     updateTag(name: string) {
-      console.log('111111');
       if (this.tag) {
         this.$store.commit('updateTag', {id: this.tag.id, name: name});
       }

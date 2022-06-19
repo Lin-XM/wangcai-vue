@@ -21,7 +21,7 @@
         throw new Error('type is unknown!!');
       }
       // this.type = type;
-      this.$emit('updateTypes',type)
+      this.$emit('update:type',type)
     }
 
   }

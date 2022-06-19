@@ -31,7 +31,6 @@ const store = new Vuex.Store({
       recordClone.createAt = new Date();
       state.recordList && state.recordList.push(recordClone);
       store.commit('saveRecord');
-      console.log(state.recordList);
       //saveRecord();
     },
     saveRecord(state) {         // 保存数据

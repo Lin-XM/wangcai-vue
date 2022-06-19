@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Layout> 我是 Statistics </Layout>
+    <Layout>
+      我是 Statistics
+    </Layout>
   </div>
 </template>
 

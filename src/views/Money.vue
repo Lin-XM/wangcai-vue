@@ -2,7 +2,7 @@
     <Layout class-prefix="layout">
 <!--        <NumberPad @updateAmount="onUpdateAmount" @submit="saveRecord"/>-->
         <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
-        <Types :type="record.type" @updateTypes="onUpdateType"/>
+        <Types :type.sync="record.type" />
         <div class="notes">
             <FormItem field-name="备注：" placeholder="你还没有输入备注呢~"
                       @update:value="onUpdateNotes"/>
@@ -44,9 +44,9 @@
       this.record.notes = value;
     }
 
-    onUpdateType(types: string) {
-      this.record.type = types;
-    }
+    // onUpdateType(types: string) {
+    //   this.record.type = types;
+    // }
 
     // onUpdateAmount(amount: string) {
     //   this.record.amount = parseFloat(amount);
