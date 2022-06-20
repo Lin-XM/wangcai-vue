@@ -5,13 +5,7 @@ import createId from '@/lib/createId';
 import router from '@/router';
 // 下面的方法会将 store 绑定在 vue.prototype 上
 Vue.use(Vuex);
-type RootState = {
-  recordList: RecordItem[],
 
-  tagList: Tag[],
-
-  currentTag?: Tag,
-}
 
 const store = new Vuex.Store({
   // 数据
@@ -28,7 +22,7 @@ const store = new Vuex.Store({
   mutations: {
     createRecord(state, record) {
       const recordClone: RecordItem = clone(record);
-      recordClone.createAt = new Date();
+      recordClone.createAt = new Date().toISOString();
       state.recordList && state.recordList.push(recordClone);
       store.commit('saveRecord');
       //saveRecord();

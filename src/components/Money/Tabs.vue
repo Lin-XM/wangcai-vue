@@ -25,7 +25,7 @@
 
     @Prop(String) readonly value!: string;      //选中哪行
     @Prop(String) classPrefix?: string;                      // 类型前缀
-    @Prop({type:String,default:'64px'}) height!:string;
+    @Prop({type: String, default: '64px'}) height!: string;
 
 
     select(item: DataSourceItem) {

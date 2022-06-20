@@ -1,14 +1,14 @@
 <template>
     <Layout class-prefix="layout">
-<!--        <NumberPad @updateAmount="onUpdateAmount" @submit="saveRecord"/>-->
+        <!--        <NumberPad @updateAmount="onUpdateAmount" @submit="saveRecord"/>-->
         <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
-        <Tabs :data-source="recordTypeList" :value.sync = record.type />
+        <Tabs :data-source="recordTypeList" :value.sync=record.type />
         <div class="notes">
             <FormItem field-name="备注：" placeholder="你还没有输入备注呢~"
                       @update:value="onUpdateNotes"/>
 
         </div>
-        <Tags />
+        <Tags/>
     </Layout>
 </template>
 
@@ -18,7 +18,7 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component} from 'vue-property-decorator';
-  import store from '@/store/index'
+  import store from '@/store/index';
   import Tabs from '@/components/Money/Tabs.vue';
   import recordTypeList from '@/constants/recordTypeList';
 
@@ -26,10 +26,10 @@
     components: {Tabs, Tags, FormItem, NumberPad},
   })
   export default class Money extends Vue {
-    recordTypeList = recordTypeList
+    recordTypeList = recordTypeList;
 
-    get recordList(){
-      return this.$store.state.recordList
+    get recordList() {
+      return this.$store.state.recordList;
     }
 
     // 当前点击标签，添加数值，不能一起存入 localStorage中
@@ -37,8 +37,8 @@
 
     record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
-    created(){
-      store.commit('fetchRecords')
+    created() {
+      store.commit('fetchRecords');
     }
 
 
@@ -55,7 +55,7 @@
     // }
 
     saveRecord() {
-      this.$store.commit('createRecord',this.record);
+      this.$store.commit('createRecord', this.record);
     }
 
 
