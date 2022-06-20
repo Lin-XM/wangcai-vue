@@ -3,6 +3,7 @@
         <ul class="tabs" :class="{[classPrefix+'-tabs']:classPrefix }">
             <li class="tabs-item" v-for="item in dataSource" :key="item.value"
                 :class="{[classPrefix+'-tabs-item']:classPrefix,selected:item.value === value}"
+                :style="{height:height}"
                 @click="select(item)">{{item.text}}
             </li>
         </ul>
@@ -24,6 +25,7 @@
 
     @Prop(String) readonly value!: string;      //选中哪行
     @Prop(String) classPrefix?: string;                      // 类型前缀
+    @Prop({type:String,default:'64px'}) height!:string;
 
 
     select(item: DataSourceItem) {
@@ -37,14 +39,14 @@
     @import "~@/assets/styles/helper.scss";
 
     .tabs {
-        background-color: lightseagreen;
+        background-color: #5adc71;
         display: flex;
         text-align: center;
         font-size: 24px;
 
         &-item {
             width: 50%;
-            height: 64px;
+            /*height: 64px;*/
             display: flex;
             justify-content: center;
             align-items: center;
@@ -57,8 +59,8 @@
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                height: 3px;
-                background-color: #2853d2;
+                height: 5px;
+                background-color: #124fe8;
             }
         }
     }
