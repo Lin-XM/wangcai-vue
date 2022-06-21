@@ -6,7 +6,7 @@
 
             <ol>
                 <li v-for="(group,index) in result" :key="index">
-                    <h3 class="title">{{group.title}}</h3>
+                    <h3 class="title">{{beautify(group.title)}}</h3>
                     <ol>
                         <li class="record" v-for="item in group.items" :key="item.id">
                             <span>{{tagString(item.tags)}}</span>
@@ -27,6 +27,7 @@
   import Tabs from '@/components/Money/Tabs.vue';
   import intervalList from '@/constants/intervalList';
   import recordTypeList from '@/constants/recordTypeList.ts';
+  import dayjs from 'dayjs';
 
   @Component({
     components: {Tabs},
@@ -34,6 +35,33 @@
   export default class Statistics extends Vue {
     tagString(tags: Tag[]) {                                                          // 处理标签
       return tags.length === 0 ? '无' : tags.join(',');
+    }
+
+    beautify(string: string) {
+      // const date = new Date(Date.parse(string));
+      // const m = date.getMonth();
+      // const y = date.getFullYear();
+      // const d = date.getDate();
+      // const now  = new Date()
+      // if(now.getFullYear() === y && now.getMonth() === m && now.getDate() === d ){
+      //   return '今天'
+      // }else{
+      //   return string
+      // }
+      const now = dayjs();
+      const day = dayjs(string);
+      if (day.isSame(now, 'day')) {
+        return '今天';
+      } else if (day.isSame(now.subtract(1, 'day'),'day')) {
+        return '昨天';
+      } else if (day.isSame(now.subtract(2, 'day'),'day')) {
+        return '前天';
+      }else if(day.isSame(now,'year')){
+        return  day.format('MM月DD日')
+      }
+      else{
+        return  day.format('YYYY年MM月DD日')
+      }
     }
 
     get recordList() {
@@ -53,7 +81,6 @@
         hashTable[date].items.push(recordList[i]);
 
       }
-      console.log(hashTable);
       return hashTable;
     }
 
@@ -116,7 +143,8 @@
         @extend %item;
         background-color: white;
         position: relative;
-        &::after{
+
+        &::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -133,7 +161,6 @@
         background-color: white;
         color: grey;
     }
-
 
 
 </style>
