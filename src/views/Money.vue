@@ -1,6 +1,5 @@
 <template>
     <Layout class-prefix="layout">
-        <!--        <NumberPad @updateAmount="onUpdateAmount" @submit="saveRecord"/>-->
         <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
         <Tabs :data-source="recordTypeList" :value.sync=record.type />
         <div class="notes">
@@ -45,14 +44,6 @@
     onUpdateNotes(value: string) {
       this.record.notes = value;
     }
-
-    // onUpdateType(types: string) {
-    //   this.record.type = types;
-    // }
-
-    // onUpdateAmount(amount: string) {
-    //   this.record.amount = parseFloat(amount);
-    // }
 
     saveRecord() {
       this.$store.commit('createRecord', this.record);

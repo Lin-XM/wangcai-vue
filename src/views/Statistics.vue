@@ -2,11 +2,9 @@
     <div>
         <Layout>
             <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-            <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval" height="48px"/>
-
             <ol>
                 <li v-for="(group,index) in groupList" :key="index">
-                    <h3 class="title">{{beautify(group.title)}}</h3>
+                    <h3 class="title">{{beautify(group.title)}}<span>￥{{group.total}}</span></h3>
                     <ol>
                         <li class="record" v-for="item in group.items" :key="item.id">
                             <span>{{tagString(item.tags)}}</span>
@@ -25,7 +23,6 @@
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
   import Tabs from '@/components/Money/Tabs.vue';
-  import intervalList from '@/constants/intervalList';
   import recordTypeList from '@/constants/recordTypeList.ts';
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
@@ -61,11 +58,16 @@
     get groupList() {
       const {recordList} = this;
       if (recordList.length === 0) { return []; }
+      type Result = {
+        title: string,
+        total?: number,
+        items: RecordItem[]
+      }[]
 
       // 对创建时间 进行排序
-      const newList = clone(recordList).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
+      const newList = clone(recordList).filter(record => record.type === this.type).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
 
-      const result = [{title: dayjs(newList[0].createAt).format('YYYY-MM-DD'), items: [newList[0]]}];      // 将newList 的第一项放进去
+      const result: Result = [{title: dayjs(newList[0].createAt).format('YYYY-MM-DD'), items: [newList[0]]}];      // 将newList 的第一项放进去
       for (let i = 0; i < newList.length; i++) {
         const currentItem = newList[i];
         const last = result[result.length - 1];
@@ -76,8 +78,10 @@
           result.push({title: dayjs(currentItem.createAt).format('YYYY-MM-DD'), items: [currentItem]});
         }
       }
-
-      console.log(result);
+      // 算出一天的支出/收入 总价格
+      result.map(group => {
+        group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+      });
       return result;
     }
 
@@ -87,8 +91,6 @@
 
     type = '-';
     // 第二列默认
-    interval = 'day';
-    intervalList = intervalList;
     recordTypeList = recordTypeList;
 
   };
@@ -109,18 +111,7 @@
             }
         }
 
-        .interval-tabs-item {
-            /*height: 48px;*/
-            background-color: #59e5cf;
 
-            &.selected {
-                background-color: darken(#59e5cf, 15%);
-
-                &::after {
-                    background-color: #5a76dc;
-                }
-            }
-        }
     }
 
     %item {

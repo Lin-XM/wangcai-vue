@@ -39,7 +39,7 @@
     @import "~@/assets/styles/helper.scss";
 
     .tabs {
-        background-color: #5adc71;
+        background-color: #30e8ae;
         display: flex;
         text-align: center;
         font-size: 24px;
