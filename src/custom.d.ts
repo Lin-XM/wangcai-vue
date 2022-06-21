@@ -6,7 +6,7 @@ type RootState = {
 }
 
 type RecordItem = {
-  tags: string[]      // 除了数据类型，还可以些构造函数，也就是类
+  tags: Tag[]      // 除了数据类型，还可以些构造函数，也就是类
   notes: string
   type: string
   amount: number
