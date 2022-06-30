@@ -71,7 +71,6 @@
       this.$emit('update:value', parseFloat(this.output));
       this.$emit('submit', parseFloat(this.output));
       this.output = '0';
-      alert("添加成功~")
     }
   }
 </script>

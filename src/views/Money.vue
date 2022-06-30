@@ -4,11 +4,10 @@
         <Tabs :data-source="recordTypeList" :value.sync=record.type />
         <div class="notes">
             <FormItem filed-name="备注：" placeholder="你还没有输入备注呢~"
-                      :vakue="note"
-                      @update:value="onUpdateNotes"/>
+                        :value.sync="record.notes"/>
 
         </div>
-        <Tags @update:value = 'record.tags'/>
+        <Tags @update:value = 'record.tags = $event'/>
     </Layout>
 </template>
 
@@ -27,15 +26,13 @@
   })
   export default class Money extends Vue {
     recordTypeList = recordTypeList;
+    record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
     get recordList() {
       return this.$store.state.recordList;
     }
 
-    // 当前点击标签，添加数值，不能一起存入 localStorage中
 
-
-    record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
     created() {
       store.commit('fetchRecords');
@@ -56,11 +53,7 @@
         this.record.notes = ''
       }
 
-
-
     }
-
-
   }
 </script>
 <style lang="scss" >
