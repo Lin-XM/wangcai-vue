@@ -10,18 +10,17 @@
             <button @click="inputContent">4</button>
             <button @click="inputContent">5</button>
             <button @click="inputContent">6</button>
-            <button>+</button>
+            <button @click="clear">CE</button>
+
 
             <button @click="inputContent">7</button>
             <button @click="inputContent">8</button>
             <button @click="inputContent">9</button>
-            <button>-</button>
 
-
-            <button @click="inputContent">.</button>
-            <button @click="inputContent" class="zero">0</button>
-            <button @click="clear">CE</button>
             <button @click="ok" class="ok">OK</button>
+            <button @click="inputContent" class="zero">0</button>
+            <button @click="inputContent">.</button>
+
         </div>
     </div>
 </template>
@@ -61,14 +60,7 @@
       if (this.output.length === 0) {
         this.output = '0';
       }
-      /*
-        if(this.output.length === 1){
-             this.output = '0"
-        }else{
-            this.output = this.output.slice(0,-1)
-        }
 
-      *  */
     }
 
     clear() {
@@ -79,6 +71,7 @@
       this.$emit('update:value', parseFloat(this.output));
       this.$emit('submit', parseFloat(this.output));
       this.output = '0';
+      alert("添加成功~")
     }
   }
 </script>
@@ -108,11 +101,12 @@
                 border: none;
 
                 &.ok {
-                    height: 64px;
+                    height: 128px;
                     float: right;
                 }
 
                 &.zero {
+                    width: 50%;
                 }
 
                 $bg: #c0eee2;
@@ -133,14 +127,17 @@
                     background-color: darken($bg, 12%);
                 }
 
-                &:nth-child(8), &:nth-child(11), &:nth-child(14) {
+                &:nth-child(8), &:nth-child(11) {
                     background-color: darken($bg, 16%);
                 }
 
                 &:nth-child(12), &:nth-child(15) {
                     background-color: darken($bg, 20%);
                 }
+                &:nth-child(14){
+                    background-color: darken($bg, 18%);
 
+                }
                 &:nth-child(16) {
                     background-color: #59e5cf;
 

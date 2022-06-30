@@ -2,7 +2,7 @@
     <div>
         <Layout>
             <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-            <ol>
+            <ol v-if="groupList.length>0">
                 <li v-for="(group,index) in groupList" :key="index">
                     <h3 class="title">{{beautify(group.title)}}<span>￥{{group.total}}</span></h3>
                     <ol>
@@ -14,6 +14,9 @@
                     </ol>
                 </li>
             </ol>
+            <div v-else class="noResult">
+                目前没有相关记录
+            </div>
 
         </Layout>
     </div>
@@ -32,7 +35,7 @@
   })
   export default class Statistics extends Vue {
     tagString(tags: Tag[]) {                                                          // 处理标签
-      return tags.length === 0 ? '无' : tags.join(',');
+      return tags.length === 0 ? '无' : tags.map(t=>t.name).join(',');
     }
 
     beautify(string: string) {
@@ -57,7 +60,6 @@
 
     get groupList() {
       const {recordList} = this;
-      if (recordList.length === 0) { return []; }
       type Result = {
         title: string,
         total?: number,
@@ -65,7 +67,13 @@
       }[]
 
       // 对创建时间 进行排序
-      const newList = clone(recordList).filter(record => record.type === this.type).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
+      const newList = clone(recordList)
+        .filter(record => record.type === this.type)
+        .sort((a, b) => dayjs(b.createAt)
+        .valueOf() - dayjs(a.createAt).valueOf());
+
+      if (recordList.length === 0) { return []; }
+
 
       const result: Result = [{title: dayjs(newList[0].createAt).format('YYYY-MM-DD'), items: [newList[0]]}];      // 将newList 的第一项放进去
       for (let i = 0; i < newList.length; i++) {
@@ -97,6 +105,10 @@
 </script>
 
 <style scoped lang="scss">
+    .noResult{
+        padding: 16px;
+        text-align: center;
+    }
     ::v-deep {
         .type-tabs-item {
             background-color: #59e5cf;

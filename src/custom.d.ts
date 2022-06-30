@@ -3,6 +3,7 @@ type RootState = {
   recordList: RecordItem[],
   tagList: Tag[],
   currentTag?: Tag,
+  createRecordError: Error | null
 }
 
 type RecordItem = {
@@ -29,5 +30,5 @@ type TagListModel = {
 
 // 声明全局变量类型
 interface Window {
-  }
+}
 

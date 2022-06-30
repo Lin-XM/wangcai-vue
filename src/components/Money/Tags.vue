@@ -21,6 +21,10 @@
 
   @Component
   export default class Tags extends Vue {
+    map: { [key: string]: string } = {
+      'tag name duplicated': '标签名重复了'
+    };
+
 
     get tagList() {
       return this.$store.state.tagList;
@@ -53,6 +57,9 @@
         return window.alert('标签名称不能为空值！！');
       }
       store.commit('createTags', name);
+      if (this.$store.state.createTagError) {
+        window.alert(this.map[this.$store.state.createTagError.message] || '未知错误');
+      }
     }
   }
 

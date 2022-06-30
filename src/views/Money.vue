@@ -3,11 +3,12 @@
         <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
         <Tabs :data-source="recordTypeList" :value.sync=record.type />
         <div class="notes">
-            <FormItem field-name="备注：" placeholder="你还没有输入备注呢~"
+            <FormItem filed-name="备注：" placeholder="你还没有输入备注呢~"
+                      :vakue="note"
                       @update:value="onUpdateNotes"/>
 
         </div>
-        <Tags/>
+        <Tags @update:value = 'record.tags'/>
     </Layout>
 </template>
 
@@ -46,13 +47,23 @@
     }
 
     saveRecord() {
+      if(!this.record.tags || this.record.tags.length === 0 ){
+        return window.alert("你还没有选择标签呢~")
+      }
       this.$store.commit('createRecord', this.record);
+      if(this.$store.state.createRecordError === null){
+        window.alert('已保存....')
+        this.record.notes = ''
+      }
+
+
+
     }
 
 
   }
 </script>
-<style lang="scss">
+<style lang="scss" >
     .layout-body-content {
         display: flex;
         flex-direction: column-reverse;
