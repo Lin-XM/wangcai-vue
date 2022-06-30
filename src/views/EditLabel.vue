@@ -7,7 +7,7 @@
         </div>
         <div class="form-wrapper">
             <FormItem :value="tag.name" @update:value="updateTag"
-                      field-name="标签名" placeholder="请输入标签名"/>
+                      field-name="标签名：" placeholder="请输入标签名"/>
 
         </div>
         <div class="button-wrapper">

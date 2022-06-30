@@ -3,7 +3,7 @@
         <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
         <Tabs :data-source="recordTypeList" :value.sync=record.type />
         <div class="notes">
-            <FormItem filed-name="备注：" placeholder="你还没有输入备注呢~"
+            <FormItem field-name="备注：" placeholder="你还没有输入备注呢~"
                         :value.sync="record.notes"/>
 
         </div>

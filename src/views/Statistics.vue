@@ -4,8 +4,8 @@
             <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
             <ol v-if="groupList.length>0">
                 <li v-for="(group,index) in groupList" :key="index">
-                    <h3 class="title">{{beautify(group.title)}}<span>￥{{group.total}}</span></h3>
-                    <ol>
+                    <h3  class="title">{{beautify(group.title)}}<span>￥{{group.total}}</span></h3>
+                    <ol v-if="group.title.length>0">
                         <li class="record" v-for="item in group.items" :key="item.id">
                             <span>{{tagString(item.tags)}}</span>
                             <span class="itemNotes">{{item.notes}}</span>

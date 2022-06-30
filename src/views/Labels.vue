@@ -41,6 +41,8 @@
       const name = window.prompt('输入你的标签名：');
       if (!name) {
         return window.alert('标签名称不能为空值！！');
+      }else if(name.trim() === '' ){
+        return window.alert('标签不能为空格！')
       }
       store.commit('createTags', name);
     }

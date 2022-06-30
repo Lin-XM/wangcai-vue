@@ -1,7 +1,7 @@
 <template>
     <div>
         <label class="formItem">
-            <span class="name">{{this.filedName}}</span>
+            <span class="name">{{this.fieldName}}</span>
             <input type="text"
                    :placeholder="placeholder"
                    :value="value"
@@ -20,7 +20,7 @@
     @Prop({default: ''}) readonly value!: string;
 
     // 接收外面传递的数据
-    @Prop({required: true}) filedName!: string;
+    @Prop({required: true}) fieldName!: string;
     @Prop() placeholder?: string;
 
     onValueChanged(value: string) {

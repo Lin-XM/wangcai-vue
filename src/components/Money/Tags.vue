@@ -55,6 +55,8 @@
       const name = window.prompt('输入你的标签名：');
       if (!name) {
         return window.alert('标签名称不能为空值！！');
+      }else if(name.trim() === '' ){
+        return window.alert('标签不能为空格！')
       }
       store.commit('createTags', name);
       if (this.$store.state.createTagError) {
@@ -82,17 +84,19 @@
             flex-wrap: wrap;
 
             > li {
-                $bg: rgb(192, 217, 255);
+                $bg: rgb(181, 246, 216);
                 background-color: $bg;
                 height: 24px;
                 line-height: 24px;
                 border-radius: 12px;
-                padding: 0 16px;
+                padding-left:16px;
+                padding-right: 16px;
+                padding-top: 1px;
                 margin-right: 12px;
                 margin-top: 4px;
 
                 &.selected {
-                    background-color: darken($bg, 20%);
+                    background-color: darken($bg, 40%);
                 }
             }
         }
