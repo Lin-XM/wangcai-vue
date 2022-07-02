@@ -4,14 +4,15 @@
             <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
             <ol v-if="groupList.length>0">
                 <li v-for="(group,index) in groupList" :key="index">
-                    <h3  class="title">{{beautify(group.title)}}<span>￥{{group.total}}</span></h3>
-                    <ol v-if="group.title.length>0">
+                    <h3 class="title">{{beautify(group.title)}}<span>￥{{group.total}}</span></h3>
+                    <ol>
                         <li class="record" v-for="item in group.items" :key="item.id">
                             <span>{{tagString(item.tags)}}</span>
                             <span class="itemNotes">{{item.notes}}</span>
                             <span>￥{{item.amount}} </span>
                         </li>
                     </ol>
+
                 </li>
             </ol>
             <div v-else class="noResult">
@@ -35,7 +36,7 @@
   })
   export default class Statistics extends Vue {
     tagString(tags: Tag[]) {                                                          // 处理标签
-      return tags.length === 0 ? '无' : tags.map(t=>t.name).join(',');
+      return tags.length === 0 ? '无' : tags.map(t => t.name).join(',');
     }
 
     beautify(string: string) {
@@ -70,13 +71,13 @@
       const newList = clone(recordList)
         .filter(record => record.type === this.type)
         .sort((a, b) => dayjs(b.createAt)
-        .valueOf() - dayjs(a.createAt).valueOf());
+          .valueOf() - dayjs(a.createAt).valueOf());
 
       if (recordList.length === 0) { return []; }
 
 
       const result: Result = [{title: dayjs(newList[0].createAt).format('YYYY-MM-DD'), items: [newList[0]]}];      // 将newList 的第一项放进去
-      for (let i = 0; i < newList.length; i++) {
+      for (let i = 1; i < newList.length; i++) {
         const currentItem = newList[i];
         const last = result[result.length - 1];
         // 如果当前项和 groupList 最后一项是同一天
@@ -88,8 +89,9 @@
       }
       // 算出一天的支出/收入 总价格
       result.map(group => {
-        group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+        group.total = group.items.reduce((sum, item) => {return sum + item.amount;}, 0);
       });
+
       return result;
     }
 
@@ -105,10 +107,11 @@
 </script>
 
 <style scoped lang="scss">
-    .noResult{
+    .noResult {
         padding: 16px;
         text-align: center;
     }
+
     ::v-deep {
         .type-tabs-item {
             background-color: #59e5cf;

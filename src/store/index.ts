@@ -23,7 +23,7 @@ const store = new Vuex.Store({
   mutations: {
     createRecord(state, record: RecordItem) {
       const recordClone: RecordItem = clone(record);
-      recordClone.createAt = new Date().toISOString();
+      recordClone.createAt = recordClone.createAt ||  new Date().toISOString();
       state.recordList && state.recordList.push(recordClone);
       store.commit('saveRecord');
       //saveRecord();

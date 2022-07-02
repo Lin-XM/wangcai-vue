@@ -2,6 +2,12 @@
     <Layout class-prefix="layout">
         <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
         <Tabs :data-source="recordTypeList" :value.sync=record.type />
+
+        <div class="createAt">
+            <FormItem field-name="日期：" placeholder="你还没有输入日期呢~"
+                      type="date"
+                      :value.sync="record.createAt"/>
+        </div>
         <div class="notes">
             <FormItem field-name="备注：" placeholder="你还没有输入备注呢~"
                         :value.sync="record.notes"/>
@@ -26,7 +32,7 @@
   })
   export default class Money extends Vue {
     recordTypeList = recordTypeList;
-    record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
+    record: RecordItem = {tags: [], notes: '', type: '-', amount: 0, createAt:new Date().toISOString()};
 
     get recordList() {
       return this.$store.state.recordList;
