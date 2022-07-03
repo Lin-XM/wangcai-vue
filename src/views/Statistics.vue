@@ -2,7 +2,9 @@
     <div>
         <Layout>
             <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-            <Chart :options="x" />
+            <div class="chart-wrapper" ref="chartWrapper">
+                <Chart class="chart" :options="x"/>
+            </div>
             <ol v-if="groupList.length>0">
                 <li v-for="(group,index) in groupList" :key="index">
                     <h3 class="title">{{beautify(group.title)}}<span>￥{{group.total}}</span></h3>
@@ -31,13 +33,19 @@
   import recordTypeList from '@/constants/recordTypeList.ts';
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
-  import Chart from "@/components/Chart.vue"
+  import Chart from '@/components/Chart.vue';
 
 
   @Component({
     components: {Tabs, Chart},
   })
   export default class Statistics extends Vue {
+    // 控制图表初始为 最右侧
+    mounted() {
+      (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 10000;
+    }
+
+
     tagString(tags: Tag[]) {                                                          // 处理标签
       return tags.length === 0 ? '无' : tags.map(t => t.name).join(',');
     }
@@ -61,6 +69,10 @@
 
     get x() {
       return {
+        grid: {
+          left: 0,
+          right: 0,
+        },
         xAxis: {
           type: 'category',
           data: [
@@ -70,7 +82,8 @@
           ]
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          show: false
         },
         series: [{
           data: [
@@ -142,10 +155,16 @@
 </script>
 
 <style scoped lang="scss">
-    .echarts {
-        max-width: 100%;
-        height: 400px;
+    .chart-wrapper {
+        overflow: auto;
+
+        > .chart {
+            width: 430%;
+            overflow: hidden;
+        }
     }
+
+
     .noResult {
         padding: 16px;
         text-align: center;
