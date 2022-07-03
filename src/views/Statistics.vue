@@ -2,9 +2,11 @@
     <div>
         <Layout>
             <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
+
             <div class="chart-wrapper" ref="chartWrapper">
                 <Chart class="chart" :options="x"/>
             </div>
+
             <ol v-if="groupList.length>0">
                 <li v-for="(group,index) in groupList" :key="index">
                     <h3 class="title">{{beautify(group.title)}}<span>￥{{group.total}}</span></h3>
@@ -42,7 +44,8 @@
   export default class Statistics extends Vue {
     // 控制图表初始为 最右侧
     mounted() {
-      (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 10000;
+      const div = (this.$refs.chartWrapper as HTMLDivElement);
+      div.scrollLeft = div.scrollWidth;
     }
 
 
@@ -79,22 +82,41 @@
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
             '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
             '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-          ]
+          ],
+          axisTick: {
+            alignWithLabel: true,
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#666'
+            }
+          }
         },
         yAxis: {
           type: 'value',
           show: false
         },
         series: [{
+          symbol: 'circle',
+          symbolSize: 10,
+          itemStyle: {borderWidth: 1, color: '#666', borderColor: '#666'},
+
           data: [
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320, 1, 2
+            22, 32, 21, 34, 29, 33, 32,
+            23, 32, 31, 34, 29, 33, 32,
+            24, 32, 41, 34, 29, 33, 32,
+            25, 32, 31, 34, 29, 33, 32, 28, 27
           ],
           type: 'line'
         }],
-        tooltip: {show: true}
+
+        tooltip: {
+          show: true,
+          triggerOn: 'click',
+          formatter: '{c}',
+          position: "top",
+        }
+
       };
     }
 
@@ -157,9 +179,11 @@
 <style scoped lang="scss">
     .chart-wrapper {
         overflow: auto;
-        &::-webkit-scrollbar{
+
+        &::-webkit-scrollbar {
             display: none;
         }
+
         > .chart {
             width: 430%;
             overflow: hidden;
