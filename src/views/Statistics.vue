@@ -157,7 +157,9 @@
 <style scoped lang="scss">
     .chart-wrapper {
         overflow: auto;
-
+        &::-webkit-scrollbar{
+            display: none;
+        }
         > .chart {
             width: 430%;
             overflow: hidden;
