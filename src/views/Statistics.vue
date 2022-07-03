@@ -36,6 +36,7 @@
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
   import Chart from '@/components/Chart.vue';
+  import _ from 'lodash';
 
 
   @Component({
@@ -69,8 +70,39 @@
       }
     }
 
+    get y() {
+
+      const today = new Date();
+      const array = [];
+      for (let i = 0; i <= 29; i++) {
+        let dateString = dayjs(today).subtract(i, 'day').format('YYYY-MM-DD');
+        let found = _.find(this.recordList, {createAt: dateString});
+        array.push({
+          date: dateString,
+          value: found ? found.amount : 0
+        });
+      }
+      console.log(array);
+      array.sort((a, b) => {
+        if (a.date < b.date) {
+          return 1;
+        } else if (a.date === b.date) {
+          return 0;
+        } else {
+          return -1;
+        }
+      });
+      return array;
+    }
+
 
     get x() {
+
+      console.log(this.recordList.map(r => _.pick(r, ['createAt', 'amount'])));
+
+      const keys = this.y.map(item => item.date);
+      const values = this.y.map(item => item.value);
+
       return {
         grid: {
           left: 0,
@@ -78,11 +110,7 @@
         },
         xAxis: {
           type: 'category',
-          data: [
-            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-            '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-            '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-          ],
+          data: keys,
           axisTick: {
             alignWithLabel: true,
           },
@@ -101,12 +129,7 @@
           symbolSize: 10,
           itemStyle: {borderWidth: 1, color: '#666', borderColor: '#666'},
 
-          data: [
-            22, 32, 21, 34, 29, 33, 32,
-            23, 32, 31, 34, 29, 33, 32,
-            24, 32, 41, 34, 29, 33, 32,
-            25, 32, 31, 34, 29, 33, 32, 28, 27
-          ],
+          data: values,
           type: 'line'
         }],
 
@@ -114,7 +137,7 @@
           show: true,
           triggerOn: 'click',
           formatter: '{c}',
-          position: "top",
+          position: 'top',
         }
 
       };
@@ -173,7 +196,7 @@
     // 第二列默认
     recordTypeList = recordTypeList;
 
-  };
+  }
 </script>
 
 <style scoped lang="scss">

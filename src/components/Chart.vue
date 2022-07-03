@@ -12,7 +12,6 @@
     @Prop() options?: EChartOption;
 
     mounted() {
-      console.log(this.options);
       if (this.options === undefined) {
         console.log('没有数据');
         return;
