@@ -34,16 +34,15 @@
     // 接收外面传递的数据
     @Prop({required: true}) fieldName!: string;
     @Prop() placeholder?: string;
-    @Prop() type?:string;
+    @Prop() type?: string;
 
     onValueChanged(value: string) {
       this.$emit('update:value', value);
     }
 
-    x(isoString:string){
-      const fuck = dayjs(isoString).format('YYYY-MM-DD')
-      console.log(fuck);
-      return fuck
+    x(isoString: string) {
+      return dayjs(isoString).format('YYYY-MM-DD');
+
     }
   }
 </script>

@@ -4,7 +4,7 @@
             <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
 
             <div class="chart-wrapper" ref="chartWrapper">
-                <Chart class="chart" :options="x"/>
+                <Chart class="chart" :options="chartOptions"/>
             </div>
 
             <ol v-if="groupList.length>0">
@@ -70,21 +70,20 @@
       }
     }
 
-    get y() {
+    get dataArrayList() {
 
       const today = new Date();
       const array = [];
       for (let i = 0; i <= 29; i++) {
         let dateString = dayjs(today).subtract(i, 'day').format('YYYY-MM-DD');
-        let found = _.find(this.recordList, {createAt: dateString});
+        let found = _.find(this.groupList, {title: dateString});
         array.push({
           date: dateString,
-          value: found ? found.amount : 0
+          value: found ? found.total : 0
         });
       }
-      console.log(array);
       array.sort((a, b) => {
-        if (a.date < b.date) {
+        if (a.date > b.date) {
           return 1;
         } else if (a.date === b.date) {
           return 0;
@@ -96,21 +95,23 @@
     }
 
 
-    get x() {
-
-      console.log(this.recordList.map(r => _.pick(r, ['createAt', 'amount'])));
-
-      const keys = this.y.map(item => item.date);
-      const values = this.y.map(item => item.value);
+    get chartOptions() {
+      const keys = this.dataArrayList.map(item => item.date);
+      const values = this.dataArrayList.map(item => item.value);
 
       return {
+        title:{
+          text:'用户支出/收入',
+          right:'30'
+        },
         grid: {
-          left: 0,
+          left:50,
           right: 0,
         },
         xAxis: {
           type: 'category',
           data: keys,
+          // inverse:true,
           axisTick: {
             alignWithLabel: true,
           },
@@ -118,11 +119,18 @@
             lineStyle: {
               color: '#666'
             }
+          },
+          axisLabel:{
+            formatter: function (value:string,index:number) {
+                 return  value.substr(5)
+
+            }
           }
         },
         yAxis: {
+          name:'人民币(￥)',
           type: 'value',
-          show: false
+          // show: false
         },
         series: [{
           symbol: 'circle',
@@ -130,7 +138,8 @@
           itemStyle: {borderWidth: 1, color: '#666', borderColor: '#666'},
 
           data: values,
-          type: 'line'
+          type: 'bar',
+
         }],
 
         tooltip: {
